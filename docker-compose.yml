@@ -1,0 +1,43 @@
+services:
+  vikunja:
+    image: vikunja/vikunja:2.3.0
+    env_file:
+      - .env
+    ports:
+      - 3456:3456
+    volumes:
+      - ./files:/app/vikunja/files
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+        limits:
+          memory: 1G
+  db:
+    image: postgres:18
+    env_file:
+      - .env
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -h localhost -U $$POSTGRES_USER
+      interval: 5s
+      start_period: 30s
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+        limits:
+          memory: 1G
+networks: {}
