@@ -24,7 +24,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql
     restart: unless-stopped
     healthcheck:
       test:
@@ -40,24 +40,4 @@ services:
           memory: 256M
         limits:
           memory: 1G
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-    ports:
-      - "9090:9090"
-    restart: unless-stopped
-    deploy:
-      resources:
-        reservations:
-          memory: 256M
-        limits:
-          memory: 1G
-volumes:
-  prometheus_data:
 networks: {}
