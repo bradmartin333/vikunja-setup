@@ -2,3 +2,4 @@ db/
 files/
 .env
 *.state
+backups/

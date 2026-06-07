@@ -12,7 +12,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
+      - com.centurylinklabs.watchtower.enable=true
     deploy:
       resources:
         reservations:
@@ -33,7 +33,7 @@ services:
       interval: 5s
       start_period: 30s
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
+      - com.centurylinklabs.watchtower.enable=true
     deploy:
       resources:
         reservations:
